@@ -10,4 +10,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     client.send(b'salam sepehr hastam')
     data = client.recv(1024)
 
-print("Recived", repr(data) )
+
+while True:
+    cmd = input()
+
+    if cmd == "":
+        pass
+
+    if cmd == "":
+        pass
+
+    if cmd == "":
+        pass
+
+    if cmd == "":
+        pass
+
+    if cmd == "":
+        break
