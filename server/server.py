@@ -26,9 +26,8 @@ def cd(pathcd):
         conn.send(str(ans).encode())
 
 while True:
-    cmd = conn.recv(1024).decode('utf-8')
-    # print(cmd)
+    cmd = conn.recv(1024).decode()
 
-    if cmd.startswith == 'cd':
+    if cmd.startswith('cd'):
         print('cd is here')
         cd(cmd[3:])

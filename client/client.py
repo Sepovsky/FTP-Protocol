@@ -12,8 +12,9 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
 
-def cd():
+def cd(cmd):
     # print('hello')
+    client.send(cmd.encode())
     ans = client.recv(1024).decode()
     print('salam')
     print(ans)
@@ -21,13 +22,12 @@ def cd():
 
 while True:
     cmd = input()
-    client.send(cmd.encode('utf-8'))
 
-    if cmd.startswith == "dwld":
+    if cmd.startswith('dwld'):
         pass
 
-    if 'cd' in cmd:
-        cd()
+    if cmd.startswith('cd'):
+        cd(cmd)
 
     if cmd == "":
         pass
