@@ -19,6 +19,11 @@ def cd(cmd):
     # print('salam')
     print(ans)
 
+def pwd(cmd):
+    client.send(cmd.encode())
+    ans = client.recv(1024).decode()
+    print(ans)
+
 
 while True:
     cmd = input()
@@ -29,8 +34,8 @@ while True:
     if cmd.startswith('cd'):
         cd(cmd)
 
-    if cmd == "":
-        pass
+    if cmd == "pwd":
+        pwd(cmd)
 
     if cmd == "":
         pass

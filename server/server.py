@@ -22,8 +22,12 @@ def cd(pathcd):
     else:
         os.chdir(pathcd)
         ans = os.getcwd()
-        print(str(ans))
+        # print(str(ans))
         conn.send(str(ans).encode())
+
+def pwd():
+    ans = os.getcwd()
+    conn.send(str(ans).encode())
 
 while True:
     cmd = conn.recv(1024).decode()
@@ -31,3 +35,6 @@ while True:
     if cmd.startswith('cd'):
         # print('cd is here')
         cd(cmd[3:])
+
+    if cmd == 'pwd':
+        pwd()
