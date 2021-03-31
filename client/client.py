@@ -4,7 +4,7 @@ import sys
 import random
 
 host = '127.0.0.1'
-port = 2111
+port = 2141
 ADDR = (host, port)
 BUFFERSIZE = 1024
 
@@ -16,7 +16,7 @@ def cd(cmd):
     # print('hello')
     client.send(cmd.encode())
     ans = client.recv(1024).decode()
-    print('salam')
+    # print('salam')
     print(ans)
 
 
