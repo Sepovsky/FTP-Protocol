@@ -4,7 +4,7 @@ import sys
 import random
 
 host = '127.0.0.1'
-port = 2141
+port = 2142
 ADDR = (host, port)
 BUFFERSIZE = 1024
 

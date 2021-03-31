@@ -4,9 +4,10 @@ import sys
 import random
 
 host = '127.0.0.1'
-port = 2141
+port = 2142
 ADDR = (host, port)
 BUFFERSIZE = 1024
+root_path = os.getcwd()
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
@@ -22,11 +23,13 @@ def cd(pathcd):
     else:
         os.chdir(pathcd)
         ans = os.getcwd()
+        ans = ans.replace(root_path, '.')
         # print(str(ans))
         conn.send(str(ans).encode())
 
 def pwd():
     ans = os.getcwd()
+    ans = ans.replace(root_path, '.')
     conn.send(str(ans).encode())
 
 while True:
