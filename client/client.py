@@ -1,40 +1,39 @@
 import socket
 import os
 import sys
+import random
 
 host = '127.0.0.1'
-port = 35355
+port = 2111
 ADDR = (host, port)
 BUFFERSIZE = 1024
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
+
+
+def cd():
+    # print('hello')
+    ans = client.recv(1024).decode()
+    print('salam')
+    print(ans)
 
 
 while True:
     cmd = input()
+    client.send(cmd.encode('utf-8'))
 
     if cmd.startswith == "dwld":
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-            client.connect(ADDR)
-            filename = cmd[5:]
-            # filename = '.'+filename
-            client.send(cmd.encode('utf-8'))
-            with open(filename, 'wb') as file:
-                data = client.recv(1200000)
-                file.write(data)
-                file.close()
-                client.close()
-            
+        pass
+
+    if 'cd' in cmd:
+        cd()
 
     if cmd == "":
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-            client.connect(ADDR)
+        pass
 
     if cmd == "":
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-            client.connect(ADDR)
-
-    if cmd == "":
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-            client.connect(ADDR)
+        pass
 
     if cmd == "qq":
         break
