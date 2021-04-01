@@ -22,25 +22,23 @@ def help():
 
 
 def cd(cmd):
-    # print('hello')
     client.send(cmd.encode())
-    ans = client.recv(1024).decode()
-    # print('salam')
+    ans = client.recv(BUFFERSIZE).decode()
     print(ans)
 
 def pwd(cmd):
     client.send(cmd.encode())
-    ans = client.recv(1024).decode()
+    ans = client.recv(BUFFERSIZE).decode()
     print(ans)
 
 def ls(cmd):
     client.send(cmd.encode())
-    ans = client.recv(1024).decode()
+    ans = client.recv(BUFFERSIZE).decode()
     print(ans)
 
 def dwld(cmd):
     print('prepare for download')
-    dwld_port = client.recv(1024).decode()
+    dwld_port = client.recv(BUFFERSIZE).decode()
     dwld_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     dwld_client.connect((host, int(dwld_port)))
     filename = cmd[5:]
@@ -54,6 +52,9 @@ def dwld(cmd):
         dwld_client.close()
         print('Download Successfully')
 
+
+print('Welcome to FTP-client made by Sepehr Shirani')
+print()
 help()
 
 while True:
@@ -63,17 +64,24 @@ while True:
         client.send(cmd.encode())
         dwld(cmd)
 
-    if cmd.startswith('cd'):
+    elif cmd.startswith('cd'):
         cd(cmd)
 
-    if cmd == "pwd":
+    elif cmd == "pwd":
         pwd(cmd)
 
-    if cmd == "list":
+    elif cmd == "list":
         ls(cmd)
 
-    if cmd == "help":
+    elif cmd == "help":
         help()
 
-    if cmd == "quit":
+    elif cmd == "quit":
+        client.send(cmd.encode())
+        client.close()
+        print('client closed')
         break
+
+    else:
+        test = cmd.split(' ')
+        print(f'Command "{test[0]}" is not found')

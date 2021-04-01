@@ -14,7 +14,7 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 server.listen()
 conn, address = server.accept()
-print('connected by {}'.format(address[0]))
+print('Connected by {}'.format(address[0]))
 
 
 def cd(pathcd):
@@ -53,11 +53,11 @@ def ls():
     for l in list_files:
         total_size += os.path.getsize(l)
         if os.path.isdir(l):
-            ans += '>\t' + l + '\t' + str(os.path.getsize(l)) + '\n'
+            ans += '>\t' + l + '\t->\t' + str(os.path.getsize(l)) + ' bytes\n'
         elif os.path.isfile(l):
-            ans += '\t' + l + '\t' + str(os.path.getsize(l)) + '\n' 
+            ans += '\t' + l + '\t->\t' + str(os.path.getsize(l)) + ' bytes\n' 
     
-    ans += 'Total size:\t' + str(total_size)
+    ans += 'Total size : ' + str(total_size) + ' bytes'
     conn.send(str(ans).encode())
 
 
@@ -81,15 +81,21 @@ while True:
     if cmd.startswith('cd'):
         cd(cmd[3:])
 
-    if cmd == 'pwd':
+    elif cmd == 'pwd':
         pwd()
 
-    if cmd == 'list':
+    elif cmd == 'list':
         ls()
 
-    if cmd.startswith('dwld'):
+    elif cmd.startswith('dwld'):
         dwld(cmd)
 
-    if cmd == 'help':
+    elif cmd == 'help':
         pass
+
+    elif cmd == 'quit':
+        conn.close()
+        print('server closed')
+        break
+
 
