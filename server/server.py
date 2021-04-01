@@ -4,7 +4,7 @@ import sys
 import random
 
 host = '127.0.0.1'
-port = 2142
+port = 2121
 ADDR = (host, port)
 BUFFERSIZE = 1024
 ROOT_PATH = os.getcwd()
@@ -50,12 +50,24 @@ def ls():
     ans += 'Total size:\t' + str(total_size)
     conn.send(str(ans).encode())
 
+def dwld(cmd):
+    filename = cmd[5:]
+    rand_port = random.randrange(3000, 50000)
+    dwld_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    dwld_socket.bind((host, rand_port))
+    dwld_socket.listen()
+    conn.send(str(rand_port).encode())
+    dwld_conn, addres = dwld_socket.accept()
+    with open(filename, 'rb') as file:
+        dwld_conn.send(file.read())
+        file.close()
+        dwld_socket.close()
+
 
 while True:
     cmd = conn.recv(1024).decode()
 
     if cmd.startswith('cd'):
-        # print('cd is here')
         cd(cmd[3:])
 
     if cmd == 'pwd':
@@ -63,3 +75,10 @@ while True:
 
     if cmd == 'list':
         ls()
+
+    if cmd.startswith('dwld'):
+        dwld(cmd)
+
+    if cmd == 'help':
+        pass
+
