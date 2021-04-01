@@ -11,6 +11,15 @@ BUFFERSIZE = 1024
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 
+def help():
+    commands = ['HELP', 'LIST', 'PWD', 'CD directory_name', 'DWLD file_path', 'QUIT']
+    description = ['Show this help', 'List files', 'Show current directory', 'Change directory', 'Download file', 'Exit']
+    for cmd, desc in zip(commands, description):
+        ans = cmd.ljust(20, ' ')
+        ans += ':'
+        ans += desc
+        print(ans)
+
 
 def cd(cmd):
     # print('hello')
@@ -45,8 +54,10 @@ def dwld(cmd):
         dwld_client.close()
         print('Download Successfully')
 
+help()
+
 while True:
-    cmd = input()
+    cmd = input('Enter a command:')
 
     if cmd.startswith('dwld'):
         client.send(cmd.encode())
@@ -62,4 +73,7 @@ while True:
         ls(cmd)
 
     if cmd == "help":
+        help()
+
+    if cmd == "quit":
         break
