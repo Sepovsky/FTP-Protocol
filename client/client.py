@@ -24,6 +24,12 @@ def pwd(cmd):
     ans = client.recv(1024).decode()
     print(ans)
 
+def ls(cmd):
+    client.send(cmd.encode())
+    ans = client.recv(1024).decode()
+    print(ans)
+
+
 
 while True:
     cmd = input()
@@ -37,8 +43,8 @@ while True:
     if cmd == "pwd":
         pwd(cmd)
 
-    if cmd == "":
-        pass
+    if cmd == "list":
+        ls(cmd)
 
     if cmd == "qq":
         break
