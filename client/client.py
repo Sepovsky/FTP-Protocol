@@ -43,9 +43,13 @@ def dwld(cmd):
     dwld_client.connect((host, int(dwld_port)))
     filename = cmd[5:]
     with open(filename, 'wb') as dwld_file:
-        data = dwld_client.recv(1048576)
-        if not data:
-            print('there is no data in {}'.format(filename))
+        data = b""
+        while True:
+            binary_dwld = dwld_client.recv(BUFFERSIZE)
+            data += binary_dwld
+
+            if not binary_dwld:
+                break
 
         dwld_file.write(data)
         dwld_file.close()
