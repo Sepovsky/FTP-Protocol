@@ -24,17 +24,19 @@ def cd(pathcd):
         conn.send(msg.encode())
 
     else:
+        check_path = os.getcwd()
         os.chdir(pathcd)
-        ans = os.getcwd()
-
-        # if not ROOT_PATH in ans or pathcd == '..':
-        #     error = "Access violation"
-        #     conn.send(error.encode())
-
-        ans = ans.replace(ROOT_PATH, '')
-        if not ans:
-            ans = '/'
-        conn.send(str(ans).encode())
+        if ROOT_PATH in pathcd:
+            ans = os.getcwd()
+            ans = ans.replace(ROOT_PATH, '')
+            if not ans:
+                ans = '/'
+            conn.send(str(ans).encode())
+        else:
+            os.chdir(check_path)
+            msg = 'Access Denied'
+            print('bad request')
+            conn.send(str(msg).encode())
 
 
 def pwd():
