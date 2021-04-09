@@ -26,35 +26,44 @@ def cd(cmd):
     ans = client.recv(BUFFERSIZE).decode()
     print(ans)
 
+
 def pwd(cmd):
     client.send(cmd.encode())
     ans = client.recv(BUFFERSIZE).decode()
     print(ans)
+
 
 def ls(cmd):
     client.send(cmd.encode())
     ans = client.recv(BUFFERSIZE).decode()
     print(ans)
 
+
 def dwld(cmd):
-    print('prepare for download')
+    print('Prepare for download')
     dwld_port = client.recv(BUFFERSIZE).decode()
-    dwld_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    dwld_client.connect((host, int(dwld_port)))
-    filename = cmd[5:]
-    with open(filename, 'wb') as dwld_file:
-        data = b""
-        while True:
-            binary_dwld = dwld_client.recv(BUFFERSIZE)
-            data += binary_dwld
 
-            if not binary_dwld:
-                break
+    if dwld_port == 'Access Denied!':
+        print('Access Denied!')
 
-        dwld_file.write(data)
-        dwld_file.close()
-        dwld_client.close()
-        print('Download Successfully')
+    else:
+        dwld_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        dwld_client.connect((host, int(dwld_port)))
+        filename = cmd[5:]
+        with open(filename, 'wb') as dwld_file:
+            data = b""
+            while True:
+                binary_dwld = dwld_client.recv(BUFFERSIZE)
+                data += binary_dwld
+
+                if not binary_dwld:
+                    break
+
+            dwld_file.write(data)
+            dwld_file.close()
+            dwld_client.close()
+            print('Downloaded Successfully')
+
 
 
 print('Welcome to FTP-client made by Sepehr Shirani')
