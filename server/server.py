@@ -85,7 +85,7 @@ def dwld(cmd):
     list_files = os.listdir()
     filename = cmd[5:]
     if filename in list_files:
-        rand_port = random.randrange(3000, 50000)
+        rand_port = random.randint(3000, 50000)
         dwld_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         dwld_socket.bind((host, rand_port))
         dwld_socket.listen()
